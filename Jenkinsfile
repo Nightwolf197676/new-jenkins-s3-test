@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/jenkinsTest01197676/new-jenkins-s3-test'
+                git branch: 'main', url: 'https://github.com/Nightwolf197676/new-jenkins-s3-test'
             }
         }
 
