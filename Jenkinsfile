@@ -18,7 +18,7 @@ pipeline {
     steps {
         withCredentials([[
             $class: 'AmazonWebServicesCredentialsBinding',
-            credentialsId: 'jenkinsTest01',
+            credentialsId: 'nightwolf',
             accessKeyVariable: 'AWS_ACCESS_KEY_ID',
             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
         ]]) {
@@ -37,7 +37,7 @@ pipeline {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'jenkinsTest01'
+                    credentialsId: 'nightwolf'
                 ]]) {
                     sh '''
                         terraform plan -out=tfplan
@@ -65,7 +65,7 @@ pipeline {
                     if (destroyChoice == 'yes') {
                         withCredentials([[
                             $class: 'AmazonWebServicesCredentialsBinding',
-                            credentialsId: 'jenkinsTest01'
+                            credentialsId: 'nightwolf'
                         ]]) {
                             sh 'terraform destroy -auto-approve'
                         }
