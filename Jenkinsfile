@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Nightwolf197676/new-jenkins-s3-test'
+                git branch: 'main', url: 'https://github.com/jenkinsTest01197676/new-jenkins-s3-test'
             }
         }
 
@@ -17,7 +17,7 @@ pipeline {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'nightwolf'
+                    credentialsId: 'jenkinsTest01'
                 ]]) {
                     sh 'terraform init'
                 }
@@ -28,7 +28,7 @@ pipeline {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'nightwolf'
+                    credentialsId: 'jenkinsTest01'
                 ]]) {
                     sh '''
                         terraform plan -out=tfplan
@@ -56,7 +56,7 @@ pipeline {
                     if (destroyChoice == 'yes') {
                         withCredentials([[
                             $class: 'AmazonWebServicesCredentialsBinding',
-                            credentialsId: 'nightwolf'
+                            credentialsId: 'jenkinsTest01'
                         ]]) {
                             sh 'terraform destroy -auto-approve'
                         }
