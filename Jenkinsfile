@@ -38,8 +38,6 @@ pipeline {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
                     credentialsId: 'bf6a2105-8276-483c-b42f-f697caa59979'
-                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                 ]]) {
                     sh '''
                         terraform plan -out=tfplan
@@ -68,8 +66,6 @@ pipeline {
                         withCredentials([[
                             $class: 'AmazonWebServicesCredentialsBinding',
                             credentialsId: 'bf6a2105-8276-483c-b42f-f697caa59979'
-                            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                         ]]) {
                             sh 'terraform destroy -auto-approve'
                         }
