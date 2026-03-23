@@ -15,15 +15,23 @@ pipeline {
         }
 
         stage('Terraform Init') {
-            steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'jenkinsTest01'
-                ]]) {
-                    sh 'terraform init'
-                }
-            }
+    steps {
+        withCredentials([[
+            $class: 'AmazonWebServicesCredentialsBinding',
+            credentialsId: 'nightwolf',
+            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+        ]]) {
+            sh '''
+                terraform init \
+                  -backend-config="bucket=jenkins-891377135193" \
+                  -backend-config="key=jenkins/new-jenkins-s3-test.tfstate" \
+                  -backend-config="region=us-east-1" \
+                  -backend-config="encrypt=true"
+            '''
         }
+    }
+}
 
         stage('Terraform Apply') {
             steps {
