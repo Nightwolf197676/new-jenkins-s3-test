@@ -2,22 +2,34 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0" # Use latest version if possible
       version = "~> 5.0"
     }
   }
 
-
-  backend "s3" { # Enable server-side encryption (optional but recommended)
-
-    bucket  = "jenkins-891377135193"                # ← your existing bucket
-    key     = "jenkins/new-jenkins-s3-test.tfstate" # ← keep or change this (e.g., "path/to/my/state.tfstate")
-    region  = "us-east-1"                           # ← must match your bucket's region
-    encrypt = true                                  # recommended: enables server-side encryption
-    # Optional but highly recommended for locking (prevents concurrent applies):
-    # dynamodb_table = "your-terraform-lock-table"  # create a DynamoDB table if you don't have one
+  backend "s3" {
+    bucket  = "jenkins-891377135193"
+    key     = "jenkins/new-jenkins-s3-test.tfstate"
+    region  = "us-east-1"
+    encrypt = true
   }
 }
+
 provider "aws" {
   region = "us-east-1"
+}
+
+resource "aws_s3_object" "armageddon_pass_png" {
+  bucket       = "jenkins-891377135193"
+  key          = "Armageddon_Pass.png"
+  source       = "./Armageddon_Pass.png"
+  etag         = filemd5("./Armageddon_Pass.png")
+  content_type = "image/png"
+}
+
+resource "aws_s3_object" "AWS_2025--WEEK_29_3-24_ASSIGNMENT_pdf" {
+  bucket       = "jenkins-891377135193"
+  key          = "AWS_2025--WEEK_29_3-24_ASSIGNMENT.pdf"
+  source       = "./AWS_2025--WEEK_29_3-24_ASSIGNMENT.pdf"
+  etag         = filemd5("./AWS_2025--WEEK_29_3-24_ASSIGNMENT.pdf")
+  content_type = "text/plain"
 }
